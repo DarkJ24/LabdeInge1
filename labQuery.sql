@@ -13,12 +13,16 @@ cliente char(9),
 numero char(8),
 PRIMARY KEY(cliente, numero),
 FOREIGN KEY (cliente) REFERENCES Clientes(cedula)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Cuentas(
 cliente char(9),
-tipo int not null,
+tipo int default 1,
 numero char(10),
 PRIMARY KEY(cliente, numero),
 FOREIGN KEY (cliente) REFERENCES Clientes(cedula)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
