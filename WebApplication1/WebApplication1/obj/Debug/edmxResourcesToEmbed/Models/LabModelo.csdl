@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="cedula" />
+    </Key>
+    <Property Name="cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="apellido2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cuentas" Relationship="Self.FK__Cuentas__cliente__15502E78" FromRole="Clientes" ToRole="Cuentas" />
+    <NavigationProperty Name="Telefonos" Relationship="Self.FK__Telefonos__clien__1273C1CD" FromRole="Clientes" ToRole="Telefonos" />
+  </EntityType>
+  <EntityType Name="Cuentas">
+    <Key>
+      <PropertyRef Name="cliente" />
+      <PropertyRef Name="numero" />
+    </Key>
+    <Property Name="cliente" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="tipo" Type="Int32" Nullable="false" />
+    <Property Name="numero" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Cuentas__cliente__15502E78" FromRole="Cuentas" ToRole="Clientes" />
+  </EntityType>
+  <EntityType Name="Telefonos">
+    <Key>
+      <PropertyRef Name="cliente" />
+      <PropertyRef Name="numero" />
+    </Key>
+    <Property Name="cliente" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="numero" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Telefonos__clien__1273C1CD" FromRole="Telefonos" ToRole="Clientes" />
+  </EntityType>
+  <Association Name="FK__Cuentas__cliente__15502E78">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Cuentas" Type="Self.Cuentas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="cedula" />
+      </Principal>
+      <Dependent Role="Cuentas">
+        <PropertyRef Name="cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Telefonos__clien__1273C1CD">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Telefonos" Type="Self.Telefonos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="cedula" />
+      </Principal>
+      <Dependent Role="Telefonos">
+        <PropertyRef Name="cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="Cuentas" EntityType="Self.Cuentas" />
+    <EntitySet Name="Telefonos" EntityType="Self.Telefonos" />
+    <AssociationSet Name="FK__Cuentas__cliente__15502E78" Association="Self.FK__Cuentas__cliente__15502E78">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Cuentas" EntitySet="Cuentas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Telefonos__clien__1273C1CD" Association="Self.FK__Telefonos__clien__1273C1CD">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Telefonos" EntitySet="Telefonos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
