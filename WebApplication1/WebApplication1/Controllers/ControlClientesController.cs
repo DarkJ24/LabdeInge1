@@ -120,42 +120,43 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ClientesModeloIntermedio modelo)
+        public ActionResult Edit(ClientesModeloIntermedio modelo, string id)
         {
             if (ModelState.IsValid)
             {
-                Clientes cliente = baseDatos.Clientes.Find(modelo.modeloClientes.cedula);
-                cliente = modelo.modeloClientes;
+                Clientes cliente = baseDatos.Clientes.Find(id);
+                modelo.modeloClientes.cedula = id;
+                baseDatos.Entry(cliente).CurrentValues.SetValues(modelo.modeloClientes);
+                baseDatos.SaveChanges();
+                IEnumerable<Telefonos> telefonos = baseDatos.Telefonos.Where(a => a.cliente == cliente.cedula).ToList();
+                IEnumerable<Cuentas> cuentas = baseDatos.Cuentas.Where(a => a.cliente == cliente.cedula).ToList();
+                baseDatos.Telefonos.RemoveRange(telefonos);
+                baseDatos.Cuentas.RemoveRange(cuentas);
                 baseDatos.SaveChanges();
                 if (modelo.modeloTelefono1.numero != null)
                 {
                     modelo.modeloTelefono1.cliente = modelo.modeloClientes.cedula;
-                    Telefonos tel1 = baseDatos.Telefonos.Find(modelo.modeloClientes.cedula, modelo.modeloTelefono1.numero);
-                    tel1 = modelo.modeloTelefono1;
+                    baseDatos.Telefonos.Add(modelo.modeloTelefono1);
                 }
                 if (modelo.modeloTelefono2.numero != null)
                 {
                     modelo.modeloTelefono2.cliente = modelo.modeloClientes.cedula;
-                    Telefonos tel2 = baseDatos.Telefonos.Find(modelo.modeloClientes.cedula, modelo.modeloTelefono2.numero);
-                    tel2 = modelo.modeloTelefono2;
+                    baseDatos.Telefonos.Add(modelo.modeloTelefono2);
                 }
                 if (modelo.modeloCuenta1.numero != null)
                 {
                     modelo.modeloCuenta1.cliente = modelo.modeloClientes.cedula;
-                    Cuentas cuenta1 = baseDatos.Cuentas.Find(modelo.modeloClientes.cedula, modelo.modeloCuenta1.numero);
-                    cuenta1 = modelo.modeloCuenta1;
+                    baseDatos.Cuentas.Add(modelo.modeloCuenta1);
                 }
                 if (modelo.modeloCuenta2.numero != null)
                 {
                     modelo.modeloCuenta2.cliente = modelo.modeloClientes.cedula;
-                    Cuentas cuenta2 = baseDatos.Cuentas.Find(modelo.modeloClientes.cedula, modelo.modeloCuenta2.numero);
-                    cuenta2 = modelo.modeloCuenta2;
+                    baseDatos.Cuentas.Add(modelo.modeloCuenta2);
                 }
                 if (modelo.modeloCuenta3.numero != null)
                 {
                     modelo.modeloCuenta3.cliente = modelo.modeloClientes.cedula;
-                    Cuentas cuenta3 = baseDatos.Cuentas.Find(modelo.modeloClientes.cedula, modelo.modeloCuenta3.numero);
-                    cuenta3 = modelo.modeloCuenta3;
+                    baseDatos.Cuentas.Add(modelo.modeloCuenta3);
                 }
                 baseDatos.SaveChanges();
                 return RedirectToAction("Index");
@@ -168,13 +169,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id)
+        public Clientes Delete(string id)
         {
             Clientes cliente = baseDatos.Clientes.Find(id);
             baseDatos.Clientes.Remove(cliente);
             baseDatos.SaveChanges();
-            return RedirectToAction("Index");
+            return cliente;
         }
 
     }

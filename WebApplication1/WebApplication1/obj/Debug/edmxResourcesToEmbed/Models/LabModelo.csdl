@@ -19,7 +19,7 @@
       <PropertyRef Name="numero" />
     </Key>
     <Property Name="cliente" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="tipo" Type="Int32" Nullable="false" />
+    <Property Name="tipo" Type="Int32" />
     <Property Name="numero" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Clientes" Relationship="Self.FK__Cuentas__cliente__15502E78" FromRole="Cuentas" ToRole="Clientes" />
   </EntityType>

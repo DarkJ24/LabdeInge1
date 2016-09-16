@@ -218,6 +218,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LabModelo.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LabModelo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LabModelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LabModelo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

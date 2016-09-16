@@ -15,7 +15,7 @@ namespace WebApplication1.Models
     public partial class Cuentas
     {
         public string cliente { get; set; }
-        public int tipo { get; set; }
+        public Nullable<int> tipo { get; set; }
         public string numero { get; set; }
     
         public virtual Clientes Clientes { get; set; }

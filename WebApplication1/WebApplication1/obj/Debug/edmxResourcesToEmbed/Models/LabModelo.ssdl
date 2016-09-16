@@ -17,7 +17,7 @@
       <PropertyRef Name="numero" />
     </Key>
     <Property Name="cliente" Type="char" MaxLength="9" Nullable="false" />
-    <Property Name="tipo" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="int" />
     <Property Name="numero" Type="char" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="Telefonos">
@@ -28,8 +28,10 @@
     <Property Name="cliente" Type="char" MaxLength="9" Nullable="false" />
     <Property Name="numero" Type="char" MaxLength="8" Nullable="false" />
   </EntityType>
-  <Association Name="FK__Cuentas__cliente__15502E78">
-    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+  <Association Name="FK__Cuentas__cliente__2F10007B">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Cuentas" Type="Self.Cuentas" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Clientes">
@@ -40,8 +42,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Telefonos__clien__1273C1CD">
-    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+  <Association Name="FK__Telefonos__clien__2B3F6F97">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Telefonos" Type="Self.Telefonos" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Clientes">
@@ -56,11 +60,11 @@
     <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cuentas" EntityType="Self.Cuentas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Telefonos" EntityType="Self.Telefonos" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Cuentas__cliente__15502E78" Association="Self.FK__Cuentas__cliente__15502E78">
+    <AssociationSet Name="FK__Cuentas__cliente__2F10007B" Association="Self.FK__Cuentas__cliente__2F10007B">
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Cuentas" EntitySet="Cuentas" />
     </AssociationSet>
-    <AssociationSet Name="FK__Telefonos__clien__1273C1CD" Association="Self.FK__Telefonos__clien__1273C1CD">
+    <AssociationSet Name="FK__Telefonos__clien__2B3F6F97" Association="Self.FK__Telefonos__clien__2B3F6F97">
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Telefonos" EntitySet="Telefonos" />
     </AssociationSet>
