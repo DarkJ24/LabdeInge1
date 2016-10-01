@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Clientes">
       <EntityTypeMapping TypeName="Model.Clientes">
         <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
           <ScalarProperty Name="cedula" ColumnName="cedula" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="apellido1" ColumnName="apellido1" />

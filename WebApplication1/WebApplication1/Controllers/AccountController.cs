@@ -15,11 +15,13 @@ namespace WebApplication1.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        public ApplicationDbContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -139,6 +141,7 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
         }
 
@@ -156,15 +159,19 @@ namespace WebApplication1.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    //Assign Role to user Here 
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    //Ends Here  
                     return RedirectToAction("Index", "Home");
                 }
+                ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
+
                 AddErrors(result);
             }
 

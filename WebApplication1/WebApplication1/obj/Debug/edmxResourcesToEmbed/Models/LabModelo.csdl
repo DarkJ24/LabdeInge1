@@ -12,6 +12,7 @@
     <Property Name="direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Cuentas" Relationship="Self.FK__Cuentas__cliente__15502E78" FromRole="Clientes" ToRole="Cuentas" />
     <NavigationProperty Name="Telefonos" Relationship="Self.FK__Telefonos__clien__1273C1CD" FromRole="Clientes" ToRole="Telefonos" />
+    <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Cuentas">
     <Key>

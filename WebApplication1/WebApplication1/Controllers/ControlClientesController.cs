@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
     public class ControlClientesController : Controller
     {
         Entities baseDatos = new Entities();
+        ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Clientes
         public ActionResult Index()
@@ -24,7 +25,9 @@ namespace WebApplication1.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Email = new SelectList(context.Users.ToList(), "Id", "Email");
+            ClientesModeloIntermedio modelo = new ClientesModeloIntermedio();
+            return View(modelo);
         }
 
         [HttpPost]
